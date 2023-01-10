@@ -2,5 +2,50 @@
 body {
   margin: 0;
   padding: 0;
-  background: green;
+  min-height: 100vh;
+  background-image: url(tissue.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+}
+
+.game-container {
+  width: 60%;
+  height: 800px;
+  padding: 1em;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 3px solid black;
+  /* border-radius: 8px; */
+}
+
+button {
+  padding: 1em;
+  background-color: #fff100;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+}
+
+.new-deck {
+  align-self: flex-start;
+}
+
+.draw {
+  font-size: 1.25rem;
+  align-self: stretch;
+}
+
+.card-slot {
+  border: 3px solid black;
+  border-radius: 5px;
+  height: 300px;
+  width: calc(300px * 5 / 7);
+}
+
+.card-slot:nth-of-type(1) {
+  margin-bottom: 50px;
 }
