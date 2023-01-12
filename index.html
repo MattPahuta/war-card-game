@@ -10,12 +10,19 @@
 <body>
 
   <div class="game-container">
-    <button id="new-deck" class="new-deck">New Deck</button>
+    <div class="header">
+      <button id="new-deck" class="new-deck">New Deck</button>
+      <p>Remaining Cards: <span id="cards-remaining"></span></p>
+    </div>
+
+    <h2 id="message">Game of War</h2>
+    <h3>Computer Score: <span id="cpuScore">0</span></h3>
     <div id="cards">
       <div class="card-slot"></div>
       <div class="card-slot"></div>
     </div>
-    <button id="draw-two" class="draw">Get Two Cards</button>
+    <h3>My Score: <span id="human-score">0</span></h3>
+    <button id="draw-cards" class="draw">Get Two Cards</button>
   </div>
 
   <script src="app.js"></script>
