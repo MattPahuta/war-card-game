@@ -10,38 +10,37 @@ const humanScoreDisplay = document.getElementById('human-score');
 let cpuScore = 0;
 let humanScore = 0;
 
-function handleClick() {
-  fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
-    .then(res => res.json())
-    .then(data => {
-      deckId = data.deck_id;
-      console.log(deckId)
-      cardsRemaining.textContent = data.remaining;
-    })
+async function handleClick() {
+  const res = await fetch("https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/")
+  const data = await res.json()
+    deckId = data.deck_id;
+    console.log(deckId)
+    cardsRemaining.textContent = data.remaining;
 }
 
 // draw two cards (after getting a deck)
-function drawCards() {
-  fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
-    .then(res => res.json())
-    .then(data => {
-      cardsRemaining.textContent = data.remaining;
-      // console.log(data.cards)
-      // display images of 2 cards returned 
-      cardsContainer.children[0].innerHTML = `
-        <img src=${data.cards[0].image} alt="card" class="card" />
+async function drawCards() {
+  const res = await fetch(`https://apis.scrimba.com/deckofcards/api/deck/${deckId}/draw/?count=2`)
+  const data = await res.json()
+    cardsRemaining.textContent = data.remaining;
+    // console.log(data.cards)
+    // display images of 2 cards returned 
+    cardsContainer.children[0].innerHTML = `
+      <img src=${data.cards[0].image} alt="card" class="card" />
       `
-      cardsContainer.children[1].innerHTML = `
-        <img src=${data.cards[1].image} alt="card" class="card" />
+    cardsContainer.children[1].innerHTML = `
+      <img src=${data.cards[1].image} alt="card" class="card" />
       `
-      message.textContent = scoreHand(data.cards[0], data.cards[1]);
+    console.log(data.cards[0])
+    console.log(data.cards[1])
+    message.textContent = scoreHand(data.cards[0], data.cards[1]);
+  
+    // disabled draw button when there's no more cards in the deck
+    if (data.remaining === 0) {
+      drawCardsBtn.disabled = true;
+      determineGameWinner()
+    }
 
-      // disabled draw button when there's no more cards in the deck
-      if (data.remaining === 0) {
-        drawCardsBtn.disabled = true;
-        determineGameWinner()
-      }
-    })
 }
 
 function determineGameWinner() {
@@ -60,6 +59,10 @@ function scoreHand(card1, card2) {
   const cardValues = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "JACK", "QUEEN", "KING", "ACE"];
   const card1Val = cardValues.indexOf(card1.value);
   const card2Val = cardValues.indexOf(card2.value);
+  console.log('Computer card value: ', card1Val)
+  console.log(typeof card1Val)
+  console.log(typeof card2Val)
+  console.log('Human card value: ', card2Val)
 
   if (card1Val === card2Val) {
     return 'War!'
@@ -72,6 +75,7 @@ function scoreHand(card1, card2) {
     humanScoreDisplay.textContent = humanScore;
     return 'You Win!'
   }
+
 }
 
 
